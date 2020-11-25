@@ -49,9 +49,7 @@ public class BookControllerTest {
                 .body(json)
                 .build();
         AwsProxyResponse response = handler.handleRequest(request, lambdaContext);
-        Assertions.assertEquals(HttpStatus.OK.getCode(), response.getStatusCode());
-        BookSaved bookSaved = objectMapper.readValue(response.getBody(), BookSaved.class);
-        Assertions.assertEquals(bookSaved.getName(), book.getName());
-        Assertions.assertNotNull(bookSaved.getIsbn());
+        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.getCode(), response.getStatusCode());
+        Assertions.assertTrue(response.getBody().contains("Fix Your Stuff"), "body was " + response.getBody());
     }
 }
